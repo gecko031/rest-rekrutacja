@@ -6,11 +6,13 @@ import router from './routes/index.js';
 // Set up the express app
 const app = express();
 
+
 //Parse incoming requests data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(router);
 
+/*
 // get all todos
 app.get('/api/v1/todos', (req, res) => {
   res.status(200).send({
@@ -128,8 +130,7 @@ app.put('/api/v1/todos/:id', (req, res) => {
     updatedTodo,
   });
 });
-
-
+*/
 
 const PORT = 5000;
 
