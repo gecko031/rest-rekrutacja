@@ -1,6 +1,7 @@
 import express from 'express';
 import db from './db/db';
 import bodyParser from 'body-parser';
+import router from './routes/index.js';
 
 // Set up the express app
 const app = express();
@@ -8,6 +9,7 @@ const app = express();
 //Parse incoming requests data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
+app.use(router);
 
 // get all todos
 app.get('/api/v1/todos', (req, res) => {
@@ -19,7 +21,7 @@ app.get('/api/v1/todos', (req, res) => {
 });
 
 //post todo
-app.post('/api/v1/todos', (req, res) => {
+router.post('/api/v1/todos', (req, res) => {
   if(!req.body.title) {
     return res.status(400).send({
       success: 'false',
