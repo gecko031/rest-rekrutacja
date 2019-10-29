@@ -6,5 +6,4 @@ module.exports = (app) => {
     app.post('/ps/notes', notes.createNote);
     app.put('/ps/notes/:id', notes.updateNote);
     app.delete('/ps/notes/:id', notes.deleteNote);
-
 }

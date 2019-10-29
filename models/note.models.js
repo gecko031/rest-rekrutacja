@@ -4,9 +4,6 @@ const noteSchema = mongoose.Schema({
   note: {
       title: String,
       content: String,
-      created: Date,
-      modified: Date,
-      __v: Number
   }
 });
 
