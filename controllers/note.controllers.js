@@ -14,22 +14,22 @@ exports.getAllNotes = (req, res) => {
 
 // Returns Note with specific id
 exports.getNote = (req, res) => {
-    NoteModel.findById(req.params.noteId)
+    NoteModel.findById(req.params.id)
         .then(note => {
             if (!note) {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.id
                 });
             }
             res.send(note);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.id
                 });
             }
             return res.status(500).send({
-                message: "Error retrieving note with id " + req.params.noteId
+                message: "Error retrieving note with id " + req.params.id
             });
         });
 };
@@ -47,10 +47,9 @@ exports.createNote = (req, res) => {
     }
     // Create note
     const note = new NoteModel({
-        title: req.body.title || "Untitled Note",
+        title: req.body.title,
         content: req.body.content
     });
-
     // Save Note in db psrest
     note.save()
         .then(data => {
@@ -63,6 +62,7 @@ exports.createNote = (req, res) => {
 }
 
 exports.updateNote = (req, res) => {
+    console.log("req body content: [" + req.body.content);
     // Validate Request
     if (!req.body.content) {
         return res.status(400).send({
@@ -71,47 +71,47 @@ exports.updateNote = (req, res) => {
     }
 
     // Find note and update it with the request body
-    NoteModel.updateNote(req.params.noteId, {
+    NoteModel.findByIdAndUpdate(req.params.id, {
         title: req.body.title || "Untitled Note",
         content: req.body.content
-    }, { new: true })
+    })
         .then(note => {
             if (!note) {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.id
                 });
             }
             res.send(note);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.id
                 });
             }
             return res.status(500).send({
-                message: "Error updating note with id " + req.params.noteId
+                message: "Error updating note with id " + req.params.id
             });
         });
 };
 
 // Deletes Note with specific Id
 exports.deleteNote = (req, res) => {
-    NoteModel.findByIdAndRemove(req.params.noteId)
+    NoteModel.findByIdAndRemove(req.params.id)
         .then(note => {
             if (!note) {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.id
                 });
             }
             res.send({ message: "Note deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.id
                 });
             }
             return res.status(500).send({
-                message: "Could not delete note with id " + req.params.noteId
+                message: "Could not delete note with id " + req.params.id
             });
         });
 };
