@@ -1,5 +1,7 @@
 const NoteModel = require('../models/note.models.js');
 
+var currentDate = new Date();
+
 // Returns all Notes
 exports.getAllNotes = (req, res) => {
     NoteModel.find()
@@ -62,19 +64,17 @@ exports.createNote = (req, res) => {
 }
 
 exports.updateNote = (req, res) => {
-    console.log("req body content: [" + req.body.content);
     // Validate Request
     if (!req.body.content) {
         return res.status(400).send({
             message: "Note content can not be empty"
         });
     }
-
     // Find note and update it with the request body
     NoteModel.findByIdAndUpdate(req.params.id, {
         title: req.body.title || "Untitled Note",
         content: req.body.content
-    })
+    }, {new: true})
         .then(note => {
             if (!note) {
                 return res.status(404).send({
@@ -100,11 +100,11 @@ exports.deleteNote = (req, res) => {
         .then(note => {
             if (!note) {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.id
+                    message: "Note not found with id " + req.params.noteId
                 });
             }
-            res.send({ message: "Note deleted successfully!" });
-        }).catch(err => {
+            res.send({ message: "Note deleted successfully!"});
+        }).catch(err => {params
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
                     message: "Note not found with id " + req.params.id
