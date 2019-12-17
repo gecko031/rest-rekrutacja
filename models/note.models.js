@@ -16,4 +16,4 @@ noteSchema.pre('findOneAndUpdate', function(next) {
 })
 
 
-module.exports = mongoose.model('NoteModel', noteSchema)
+module.exports = mongoose.model('Notes', noteSchema)

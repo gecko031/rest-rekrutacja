@@ -49,6 +49,7 @@ exports.createNote = (req, res) => {
     }
     // Create note
     const note = new NoteModel({
+        _id: req.body._id,
         title: req.body.title,
         content: req.body.content
     });
