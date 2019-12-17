@@ -1,7 +1,5 @@
 const NoteModel = require('../models/note.models.js');
 
-var currentDate = new Date();
-
 // Returns all Notes
 exports.getAllNotes = (req, res) => {
     NoteModel.find()
