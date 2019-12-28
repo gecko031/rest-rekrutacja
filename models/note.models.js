@@ -9,5 +9,9 @@ const noteSchema = mongoose.Schema(
         timestamps: true
     }
 );
+noteSchema.pre('findOneAndUpdate', function(next) {
+    this.updateOne({}, {$inc: {__v: 0.5}}, next );
+})
 
-module.exports = mongoose.model('NoteModel', noteSchema)
+
+module.exports = mongoose.model('Notes', noteSchema)
