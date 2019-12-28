@@ -11,6 +11,5 @@ module.exports = (app) => {
 
     // History collection
     app.get('/ps/history', HistoryNoteModel.getAllNotes);
-    app.get('/ps/history/:id', HistoryNoteModel.getNote);
-
+    app.get('/ps/history/:id', HistoryNoteModel.getNoteHistory);
 }
